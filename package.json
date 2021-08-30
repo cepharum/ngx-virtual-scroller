@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/ng-packagr/package.schema.json",
   "name": "ngx-virtual-scroller",
-  "version": "4.0.3",
+  "version": "4.0.4-rc.1",
   "description": "Angular module for virtual -infinite- list. Supports horizontal/vertical, variable heights, & multi-column",
   "main": "dist/virtual-scroller.js",
   "types": "dist/virtual-scroller.d.ts",
@@ -88,7 +88,7 @@
     "replace-x": "1.7.2",
     "rimraf": "3.0.2",
     "rxjs": "6.5.4",
-    "tslib": "1.11.0",
+    "tslib": "^2.3.1",
     "tslint": "6.0.0",
     "typescript": "3.7.5",
     "zone.js": "0.10.2"
