@@ -1,9 +1,13 @@
-import { Input } from '@angular/core'; 
+import {Component, Input} from '@angular/core';
 import { ListItem, ListItemComponent } from './list-item.component';
 import { Chance } from 'chance';
 
-export class BaseList {
-  protected _items: ListItem[];
+@Component({
+  selector: 'app-base-list',
+  template: '',
+})
+// tslint:disable-next-line:component-class-suffix
+export abstract class BaseList {
 
   @Input()
   public get items(): ListItem[]
@@ -16,13 +20,18 @@ export class BaseList {
 	  this.setToFullList();
   }
 
+  constructor() {
+    this.setToFullList();
+  }
+
+  public static index = 0;
+  public static chance = new Chance(0); // 0 = seed for repeatability
+  protected _items: ListItem[];
+
   public ListItemComponent = ListItemComponent;
   public randomSize = false;
 
   public filteredList: ListItem[];
-
-  public static index = 0;
-  public static chance = new Chance(0); // 0 = seed for repeatability
   public static generateRandomItem(): ListItem {
 	  return {
 		  id: BaseList.chance.guid(),
@@ -36,24 +45,24 @@ export class BaseList {
 		  company: BaseList.chance.company()
 	  };
   }
-  
+
   public static generateMultipleRandomItems(count: number): ListItem[] {
-	  let result = Array(count);
+	  const result = Array(count);
   	  for (let i = 0; i < count; ++i) {
 		  result[i] = BaseList.generateRandomItem();
 	  }
-	  
+
 	  return result;
   }
-  
+
   public prependItems(): void {
 	  this.filteredList.unshift.apply(this.filteredList, BaseList.generateMultipleRandomItems(10));
   }
-  
+
   public appendItems(): void {
 	  this.filteredList.push.apply(this.filteredList, BaseList.generateMultipleRandomItems(10));
   }
-    
+
   public reduceListToEmpty() {
     this.filteredList = [];
   }
@@ -72,9 +81,5 @@ export class BaseList {
 
   public setToFullList() {
     this.filteredList = [].concat(this.items || []) || [];
-  }
-
-  constructor() {
-    this.setToFullList();
   }
 }

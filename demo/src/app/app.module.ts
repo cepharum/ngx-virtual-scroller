@@ -2,7 +2,7 @@ import { AppComponent } from './app.component';
 import { RouterModule, Router } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 import { AboutComponent } from './routes/about.component';
@@ -18,7 +18,7 @@ import { MultiColListComponent } from './lists/multi-col-list.component';
 import { TableListComponent } from './lists/table-list.component';
 import { VerticalListComponent } from './lists/vertical-list.component';
 
-import { VirtualScrollerModule, VirtualScrollerDefaultOptions } from 'ngx-virtual-scroller';
+import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 
 const customDefaultOptions = {
 	scrollThrottlingTime: 0,
@@ -30,9 +30,9 @@ const customDefaultOptions = {
 	stripedTable: false
 };
 
-//export function defaultOptionsFactory(): VirtualScrollerDefaultOptions {
-//	return customDefaultOptions;
-//}
+// export function defaultOptionsFactory(): VirtualScrollerDefaultOptions {
+// 	return customDefaultOptions;
+// }
 
 @NgModule({
   declarations: [
@@ -60,16 +60,16 @@ const customDefaultOptions = {
     ),
     BrowserModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     VirtualScrollerModule
   ],
   providers: [
     {
 		provide: 'virtual-scroller-default-options', useValue: customDefaultOptions
 	}
-	//{
-	//	'virtual-scroller-default-options', useFactory: defaultOptionsFactory
-	//}
+	// {
+	// 	'virtual-scroller-default-options', useFactory: defaultOptionsFactory
+	// }
   ],
   bootstrap: [AppComponent]
 })
@@ -77,8 +77,8 @@ export class AppModule {
   constructor(router: Router) {
     router.events.subscribe(() => {
       setTimeout(() => {
-        window['hljs'].initHighlighting.called = false;
-        window['hljs'].initHighlighting();
+        (window as any).hljs.initHighlighting.called = false;
+        (window as any).hljs.initHighlighting();
       }, 0);
     });
   }
